@@ -8,10 +8,10 @@ from common.database import AsyncSessionLocal
 from common.models import Run
 from langgraph.graph import END, StateGraph
 
+from agent.email_agent.state import AgentState
 from agent.nodes.analyze import analyze_node
 from agent.nodes.fetch_emails import fetch_emails_node
 from agent.nodes.report import report_node
-from agent.state import AgentState
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +29,7 @@ _graph = (
 
 
 async def run_agent(run_id: str | None = None) -> AgentState:
-    """Invoke the LangGraph agent, creating a Run record only if needed.
+    """Invoke the email LangGraph agent, creating a Run record only if needed.
 
     Args:
         run_id: Existing run ID (already persisted by the API). Creates a new
@@ -53,10 +53,10 @@ async def run_agent(run_id: str | None = None) -> AgentState:
         errors=[],
     )
 
-    logger.info("Starting agent run %s", run_id)
+    logger.info("Starting email agent run %s", run_id)
     final_state: AgentState = await _graph.ainvoke(initial_state)
     logger.info(
-        "Completed agent run %s with %d errors",
+        "Completed email agent run %s with %d errors",
         run_id,
         len(final_state.get("errors", [])),
     )

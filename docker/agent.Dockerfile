@@ -22,4 +22,4 @@ COPY packages/agent/src packages/agent/src
 ENV PYTHONPATH=/app/packages/common/src:/app/packages/agent/src
 
 # Run the agent once and exit (one-shot mode)
-CMD ["/app/.venv/bin/python", "-c", "import asyncio; from agent.graph import run_agent; asyncio.run(run_agent())"]
+CMD ["/app/.venv/bin/python", "-c", "import asyncio; from agent.email_agent.graph import run_agent; asyncio.run(run_agent())"]

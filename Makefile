@@ -35,8 +35,8 @@ migrate: ## Run Alembic migrations (requires db to be running)
 auth-gmail: ## Authenticate Gmail OAuth2 locally (run once to generate token.json)
 	uv run python -c "from agent.tools.gmail import _get_credentials; _get_credentials(); print('token.json saved — ready for Docker')"
 
-run-agent: ## Run the agent once locally (requires .env with valid credentials)
-	uv run python -c "import asyncio; from agent.graph import run_agent; asyncio.run(run_agent())"
+run-agent: ## Run the email agent once locally (requires .env with valid credentials)
+	uv run python -c "import asyncio; from agent.email_agent.graph import run_agent; asyncio.run(run_agent())"
 
 run-api: ## Start the API locally (requires local db)
 	uv run uvicorn api.main:app --reload --host 0.0.0.0 --port 8000

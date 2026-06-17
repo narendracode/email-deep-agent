@@ -8,8 +8,8 @@ from common.database import AsyncSessionLocal
 from common.models import EmailRecord
 from sqlalchemy import update
 
+from agent.email_agent.state import AgentState, AnalyzedEmail, EmailMessage
 from agent.llm import complete
-from agent.state import AgentState, AnalyzedEmail, EmailMessage
 
 logger = logging.getLogger(__name__)
 

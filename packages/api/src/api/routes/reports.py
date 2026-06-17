@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 from datetime import datetime
 
-from agent.graph import run_agent
+from agent.email_agent.graph import run_agent
 from common.database import get_session
 from common.models import Report, Run
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException

@@ -7,7 +7,7 @@ from common.database import AsyncSessionLocal
 from common.models import EmailRecord, Run
 from sqlalchemy import select
 
-from agent.state import AgentState, EmailMessage
+from agent.email_agent.state import AgentState, EmailMessage
 from agent.tools.gmail import fetch_emails as gmail_fetch
 
 logger = logging.getLogger(__name__)
