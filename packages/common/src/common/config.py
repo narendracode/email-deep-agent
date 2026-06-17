@@ -13,6 +13,7 @@ class Settings(BaseSettings):
 
     # Anthropic
     anthropic_api_key: str = ""
+    anthropic_model: str = "claude-opus-4-8"
 
     # Gmail OAuth2
     gmail_credentials_json: str = "credentials.json"

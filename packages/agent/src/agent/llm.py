@@ -16,7 +16,7 @@ def get_client() -> anthropic.AsyncAnthropic:
 
 
 async def complete(prompt: str, max_tokens: int = 4096) -> str:
-    """Send a prompt to Claude Opus 4.8 with adaptive thinking and return the text response.
+    """Send a prompt to the configured Anthropic model and return the text response.
 
     Args:
         prompt: The user prompt to send.
@@ -26,8 +26,9 @@ async def complete(prompt: str, max_tokens: int = 4096) -> str:
         The assistant's text response.
     """
     client = get_client()
+    settings = get_settings()
     async with client.messages.stream(
-        model="claude-opus-4-8",
+        model=settings.anthropic_model,
         max_tokens=max_tokens,
         thinking={"type": "adaptive"},
         messages=[{"role": "user", "content": prompt}],
