@@ -1,0 +1,25 @@
+[project]
+name = "agent"
+version = "0.1.0"
+description = "LangGraph + Anthropic deep agent for email processing"
+requires-python = ">=3.12"
+dependencies = [
+    "common",
+    "langgraph>=0.2",
+    "langchain>=0.3",
+    "langchain-anthropic>=0.3",
+    "anthropic>=0.40",
+    "google-api-python-client>=2.154",
+    "google-auth-httplib2>=0.2",
+    "google-auth-oauthlib>=1.2",
+]
+
+[tool.uv.sources]
+common = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agent"]
