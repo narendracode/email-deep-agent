@@ -44,3 +44,6 @@ client_secret_1000953192566-koiq5umk87utf12ol0kegksr3omu3651.apps.googleusercont
 # OS
 .DS_Store
 Thumbs.db
+diagram.md
+agent.jpg
+docs/**

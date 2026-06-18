@@ -38,6 +38,17 @@ auth-gmail: ## Authenticate Gmail OAuth2 locally (run once to generate token.jso
 run-agent: ## Run the email agent once locally (requires .env with valid credentials)
 	uv run python -c "import asyncio; from agent.email_agent.graph import run_agent; asyncio.run(run_agent())"
 
+run-calculator: ## Run the calculator agent interactively (pass QUERY="..." for single shot)
+	@if [ -n "$(QUERY)" ]; then \
+		uv run python packages/agent/src/agent/run_calculator.py "$(QUERY)"; \
+	else \
+		uv run python packages/agent/src/agent/run_calculator.py; \
+	fi
+
+diagram-calculator: ## Generate PNG diagram of the calculator agent (outputs docs/calculator_agent.png)
+	@mkdir -p docs
+	uv run python packages/agent/src/agent/run_calculator.py --diagram --output docs/calculator_agent.png
+
 run-api: ## Start the API locally (requires local db)
 	uv run uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
 
