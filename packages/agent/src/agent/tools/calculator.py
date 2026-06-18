@@ -1,8 +1,13 @@
 from __future__ import annotations
 
-from typing import Literal
+from typing import Annotated, Literal
 
-from langchain_core.tools import tool
+from langchain_core.messages import ToolMessage
+from langchain_core.tools import InjectedToolCallId, tool
+from langgraph.prebuilt import InjectedState
+from langgraph.types import Command
+
+from agent.calculator_agent.state import CalculatorAgentState
 
 
 @tool
@@ -10,7 +15,9 @@ def calculator(
     operation: Literal["add", "subtract", "multiply", "divide"],
     a: int | float,
     b: int | float,
-) -> int | float:
+    state: Annotated[CalculatorAgentState, InjectedState],
+    tool_call_id: Annotated[str, InjectedToolCallId],
+) -> Command:
     """Two-input calculator tool that returns precise answers.
 
     Args:
@@ -19,7 +26,7 @@ def calculator(
         b: The second number.
 
     Returns:
-        The result of the calculation.
+        A Command updating state with the result and operation log.
 
     Raises:
         ValueError: If operation is divide and b is zero.
@@ -33,14 +40,21 @@ def calculator(
         raise ValueError("Division by zero is not allowed.")
 
     if operation == "add":
-        return a + b
+        result = a + b
     elif operation == "subtract":
-        return a - b
+        result = a - b
     elif operation == "multiply":
-        return a * b
+        result = a * b
     elif operation == "divide":
-        return a / b
+        result = a / b
     else:
         raise ValueError(
             f"Invalid operation: {operation}. Supported: add, subtract, multiply, divide."
         )
+
+    return Command(
+        update={
+            "ops": [f"({operation}, {a}, {b}) = {result}"],
+            "messages": [ToolMessage(str(result), tool_call_id=tool_call_id)],
+        }
+    )

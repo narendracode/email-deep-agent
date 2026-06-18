@@ -4,6 +4,7 @@ from common.config import get_settings
 from langchain.agents import create_agent
 from langchain_anthropic import ChatAnthropic
 
+from agent.calculator_agent.state import CalculatorAgentState
 from agent.tools.calculator import calculator
 
 SYSTEM_PROMPT = (
@@ -26,7 +27,7 @@ def build_graph() -> object:
         api_key=settings.anthropic_api_key,
         max_tokens=4096,
     )
-    agent =  create_agent(model=model, tools=[calculator], system_prompt=SYSTEM_PROMPT)
+    agent =  create_agent(model=model, tools=[calculator], system_prompt=SYSTEM_PROMPT, state_schema=CalculatorAgentState)
     agent = agent.with_config({"recursion_limit": 20})
 
     return agent
